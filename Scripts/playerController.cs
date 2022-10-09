@@ -19,7 +19,7 @@ public class playerController : MonoBehaviour
     public float speed = 5f;
     public float horizontalInput;
     private float xDownRange = 0.0f;
-    private float xUpRange = 20.5f;
+    private float xUpRange = 0.0f;
     
 
     // Start is called before the first frame update
