@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class moveLeft : MonoBehaviour
 {
-    public float time_of_running = 0;
+    public float time_of_running = 0.1f;
     public float speed = 10;
-   
+    private float koeff = 1;
     private playerController playerControllerScript;
     // Start is called before the first frame update
     void Start()
@@ -25,8 +25,8 @@ public class moveLeft : MonoBehaviour
 
         }
         time_of_running = time_of_running + 1 * Time.deltaTime;
-        
-
+        koeff = time_of_running / 100000;
+        speed = speed + koeff;
     }
 
    

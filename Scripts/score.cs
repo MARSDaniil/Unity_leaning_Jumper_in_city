@@ -8,6 +8,7 @@ public class score : MonoBehaviour
     public float time_of_running = 0;
     [SerializeField] public Text scoreText;
     [SerializeField] public Transform player;
+    private float koeff = 1;
   
     private playerController playerControllerScript;
     // Start is called before the first frame update
@@ -21,7 +22,8 @@ public class score : MonoBehaviour
     {
         if (playerControllerScript.isGameOver == false)
         {
-            time_of_running = time_of_running + 1 * Time.deltaTime;
+            time_of_running = time_of_running + koeff * Time.deltaTime;
+            koeff = 1 + time_of_running / 100;
             scoreText.text = ((int)(time_of_running)).ToString();
         }
         
