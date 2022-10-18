@@ -12,6 +12,8 @@ public class playerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
     private AudioSource playerAudio;
+   // public GameObject startText;
+   // public GameObject gameOverText;
 
     public float jummpForce;
     public float gravityModifier;
@@ -20,11 +22,14 @@ public class playerController : MonoBehaviour
     public bool isGameOver = false;
     public bool doubleJump = false;
     private bool startedRunning = false;
+    public bool planeAirCrash = false;
 
     public float horizontalInput;
     Vector3 normal_EulerAngle = new Vector3(0, 90, 0);
     Vector3 normal_Position = new Vector3(0, 0, 0);
     private float start_speed = 2;
+    private float maxHight = 9f;
+    public float time_of_running = 0.1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,8 +45,9 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(startedRunning == false)
+        Timer();
+        MaxHight();
+        if (startedRunning == false)
         {
             dirtyParticle.Stop();
           //  playerAnim.SetFloat("Speed_f", 0.3f);
@@ -84,21 +90,19 @@ public class playerController : MonoBehaviour
             }
         }
     }
-    /*
-    private void MoveOnX()
+    
+    public void Timer()
     {
-       // horizontalInput = Input.GetAxis("Horizontal");
-        //transform.Translate(Vector3.forward * horizontalInput * Time.deltaTime * speed);
-        if (transform.position.x < xDownRange)
+        time_of_running = time_of_running + 1 * Time.deltaTime;
+    }
+    
+    private void MaxHight()
+    {
+        if(transform.position.y > maxHight)
         {
-            transform.position = new Vector3(xDownRange, transform.position.y, 0);
-        }
-        if (transform.position.x > xUpRange)
-        {
-            transform.position = new Vector3(xUpRange, transform.position.y, 0);
+            transform.position = new Vector3(transform.position.x, maxHight, transform.position.z);
         }
     }
-    */
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -109,16 +113,23 @@ public class playerController : MonoBehaviour
             dirtyParticle.Play();
            // transform.position = new Vector3(0, 0, 0);
         }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        else if (collision.gameObject.CompareTag("Obstacle")|| collision.gameObject.CompareTag("plane"))
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
             dirtyParticle.Stop();
             playerAudio.PlayOneShot(crashSound, 1.0f);
             isGameOver = true;
+           
             playerAnim.SetBool("Death_b",true);
             playerAnim.SetInteger("DeathType_int",1);
             explosionParticle.Play();
+           if (collision.gameObject.CompareTag("plane"))
+            {
+                planeAirCrash = true;
+            }
+          
         }
+        
     }
 
 

@@ -6,11 +6,15 @@ public class deleteObject : MonoBehaviour
 {
     // Start is called before the first frame update
     public float xCoordinatsToDelete = -14;
+    private playerController playerControllerScript;
+   // private bool isItPlane = false;
+
     private Vector3 coordinatsToDelete;
     void Start()
     {
-       coordinatsToDelete = new Vector3(xCoordinatsToDelete, 0, 0);
-}
+        playerControllerScript = GameObject.Find("player").GetComponent<playerController>();
+        coordinatsToDelete = new Vector3(xCoordinatsToDelete, 0, 0);
+    }
 
     // Update is called once per frame
     void Update()
@@ -19,5 +23,15 @@ public class deleteObject : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (playerControllerScript.planeAirCrash == true && transform.position.y > 2)
+        {
+            Destroy(gameObject);
+        }
     }
+
+ 
+
+    
 }
+
+
