@@ -50,7 +50,7 @@ public class playerController : MonoBehaviour
             {
                 startedRunning = true;
                 dirtyParticle.Play();
-                Invoke("StartRunning", 1f);
+                
                 transform.eulerAngles = normal_EulerAngle;
                 transform.position = normal_Position;
             }
